@@ -1,0 +1,458 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* ===== Override/Enhance Theme Colors for a Premium Fashion Brand ===== */
+    :root {
+        --primary: #7B1E26; /* Deep Luxe Indigo */
+        --primary-dark: #4A0F16; /* Midnight Black */
+        --accent-warm: #FBF3EC; /* Stone/Flax Grey */
+        --text-dark: #2A1518; /* Soft Charcoal Black */
+        --text-light: #9A7369; /* Warm Slate Grey */
+    }
+
+    /* ===== Maroon Parfum Hero ===== */
+    .hero-section {
+        background: linear-gradient(180deg, #FDF8F4 0%, #F9EDE2 55%, #F6E3D3 100%);
+        border-bottom: 1px solid var(--border);
+        padding: 90px 5% 110px;
+        text-align: center;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .hero-badge {
+        background: linear-gradient(90deg, #7B1E26, #4A0F16);
+        color: #E8CF8A !important;
+        border-color: #C9A227 !important;
+        font-family:'Jost';
+        old-bg: #FBF3EC;
+        color: var(--text-dark);
+        padding: 6px 18px;
+        border-radius: 100px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        display: inline-block;
+        margin-bottom: 24px;
+        border: 1px solid #E8D5C4;
+    }
+
+    .hero-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.6rem;
+        font-weight: 700;
+        line-height: 1.12;
+        letter-spacing: -1px;
+        color: var(--text-dark);
+        margin: 0 auto 24px;
+        max-width: 850px;
+    }
+
+    .hero-title span {
+        font-weight: 400;
+        font-style: italic;
+        font-family: 'Playfair Display', serif;
+        color: var(--primary);
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        color: var(--text-light);
+        max-width: 580px;
+        margin: 0 auto 40px;
+        line-height: 1.6;
+    }
+
+    .hero-cta-group {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+    }
+
+    .btn-main {
+        padding: 16px 36px;
+        border-radius: 8px; /* Sharper, tailored corners */
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-primary {
+        background: var(--primary);
+        color: #fff;
+    }
+
+    .btn-primary:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: var(--text-dark);
+        border: 1px solid var(--text-dark);
+    }
+
+    .btn-secondary:hover {
+        background: #FBF3EC;
+        transform: translateY(-2px);
+    }
+
+    /* ===== Fashion Ecosystem Stepper ===== */
+    .section-container {
+        padding: 60px 5% 80px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .stepper-card-wrapper {
+        background: #ffffff; 
+        border-radius: 16px; 
+        border: 1px solid #E8D5C4; 
+        margin-bottom: 60px;
+        padding: 40px 20px;
+    }
+
+    .checkout-stepper {
+        max-width: 650px;
+    }
+
+    /* Overriding base blue styling dynamically for the textile look */
+    .step-item.active .step-circle {
+        background: var(--primary) !important;
+        box-shadow: 0 0 0 5px rgba(123, 30, 38, 0.1) !important;
+    }
+    
+    .stepper-line-progress {
+        background: var(--primary) !important;
+    }
+
+    /* ===== Categories Grid ===== */
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 40px;
+    }
+
+    .section-info-title {
+        font-size: 1.8rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        margin: 0 0 8px 0;
+    }
+
+    .section-info-desc {
+        color: var(--text-light);
+        margin: 0;
+        font-size: 0.95rem;
+    }
+
+    .view-all-link {
+        color: var(--text-dark);
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid var(--text-dark);
+        padding-bottom: 2px;
+        transition: opacity 0.2s;
+    }
+
+    .view-all-link:hover {
+        opacity: 0.7;
+    }
+
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+    }
+
+    .category-card {
+        background: #fff;
+        border: 1px solid #E8D5C4;
+        border-radius: 12px;
+        padding: 36px 28px;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s ease;
+    }
+
+    .category-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--text-dark);
+    }
+
+    .category-tag {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--text-light);
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+        display: block;
+    }
+
+    .category-card h3 {
+        margin: 0 0 10px 0;
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+    }
+
+    .category-card p {
+        margin: 0;
+        color: var(--text-light);
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    /* ===== Tailored Products Grid ===== */
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 32px;
+    }
+
+    .product-card {
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        overflow: visible;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-img-wrapper {
+        position: relative;
+        padding-top: 130%; /* Editorial 3:4 Aspect Ratio for clothing */
+        background: #FBF3EC;
+        overflow: hidden;
+        border-radius: 8px;
+    }
+
+    .product-img-wrapper img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .product-card:hover .product-img-wrapper img {
+        transform: scale(1.04);
+    }
+
+    .product-badge {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        background: #ffffff;
+        color: var(--text-dark);
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .product-content {
+        padding: 16px 0 0 0; /* Align perfectly down with image edge */
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .product-fabric {
+        font-size: 0.75rem;
+        color: var(--text-light);
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.8px;
+        margin-bottom: 6px;
+    }
+
+    .product-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin: 0 0 8px;
+        color: var(--text-dark);
+        line-height: 1.4;
+        text-decoration: none;
+    }
+
+    .product-title:hover {
+        opacity: 0.7;
+    }
+
+    .product-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+        padding-top: 8px;
+    }
+
+    .product-price {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-dark);
+    }
+
+    .add-to-cart-btn {
+        background: transparent;
+        color: var(--text-dark);
+        border: 1px solid #E8D5C4;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .add-to-cart-btn:hover {
+        background: var(--text-dark);
+        color: #ffffff;
+        border-color: var(--text-dark);
+    }
+
+    @media (max-width: 768px) {
+        .hero-title { font-size: 2.6rem; }
+        .hero-section { padding: 60px 5% 70px; }
+    }
+</style>
+
+<!-- Editorial Hero Section -->
+<section class="hero-section">
+    <div class="hero-badge">Grasse Oils • 20% Parfum Concentration • Long-Lasting</div>
+    <h1 class="hero-title">Wear a scent they will <span>never forget.</span></h1>
+    <p class="hero-subtitle">Oud, amber, jasmine & fresh citruses — hand-blended eau de parfums that last 8-12 hours from a single spray.</p>
+    <div class="hero-cta-group">
+        <a href="{% url 'category' %}" class="btn-main btn-primary">Shop Bestsellers</a>
+        <a href="{% url 'about' %}" class="btn-main btn-secondary">Our Story</a>
+    </div>
+</section>
+
+<!-- Brand Journey Stepper Frame -->
+<section class="section-container" style="padding-top: 0; padding-bottom: 40px;">
+    <div class="stepper-card-wrapper">
+        <div class="section-header" style="justify-content: center; text-align: center; margin-bottom: 12px;">
+            <div>
+                <h2 class="section-info-title" style="font-size: 1.4rem;">The Essence Noir Ritual</h2>
+                <p class="section-info-desc">From rare oils to your skin — sourced, macerated & bottled in small batches.</p>
+            </div>
+        </div>
+        
+        <div class="checkout-stepper">
+            <div class="stepper-line">
+                <div class="stepper-line-progress" style="width: 50%;"></div>
+            </div>
+            <div class="step-item active">
+                <div class="step-circle">1</div>
+                <div class="step-label">Rare Oils</div>
+            </div>
+            <div class="step-item active">
+                <div class="step-circle">2</div>
+                <div class="step-label">Master Blending</div>
+            </div>
+            <div class="step-item">
+                <div class="step-circle">3</div>
+                <div class="step-label">Lasting Sillage</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Curated Fragrance Categories -->
+<section class="section-container">
+    <div class="section-header">
+        <div>
+            <h2 class="section-info-title">Shop by Mood</h2>
+            <p class="section-info-desc">Woody, floral, fresh or oriental — find the accord that feels like you.</p>
+        </div>
+        <a href="{% url 'category' %}" class="view-all-link">All Fragrances</a>
+    </div>
+
+    <div class="categories-grid">
+        <a href="{% url 'category' %}" class="category-card">
+            <span class="category-tag">Warm & Bold</span>
+            <h3>Oud & Oriental</h3>
+            <p>Smoked oud, amber & vanilla — deep, magnetic evening scents.</p>
+        </a>
+        <a href="{% url 'category' %}" class="category-card">
+            <span class="category-tag">Light & Daily</span>
+            <h3>Fresh & Citrus</h3>
+            <p>Bergamot, neroli & marine notes — crisp everyday signatures.</p>
+        </a>
+        <a href="{% url 'category' %}" class="category-card">
+            <span class="category-tag">Soft & Floral</span>
+            <h3>Floral & Romantic</h3>
+            <p>Rose, jasmine & peony bouquets — soft, elegant, unforgettable.</p>
+        </a>
+    </div>
+</section>
+
+<section class="section-container" style="padding-top: 0;">
+    <div class="section-header">
+        <div>
+            <h2 class="section-info-title">Bestselling Parfums</h2>
+            <p class="section-info-desc">Loved by 40,000+ customers · 4.8★ rated · IFRA-safe oils.</p>
+        </div>
+    </div>
+
+    <div class="products-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <!-- Dynamic Badge Assignment (Optional: if your model has a condition) -->
+            {% if forloop.first %}
+                <span class="product-badge">Bestseller</span>
+            {% endif %}
+            
+            <div class="product-img-wrapper">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                    <!-- Fallback placeholder styling if no product image exists -->
+                    <div style="position: absolute; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #FBF3EC; color: var(--primary);">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="width: 40px; height: 40px; fill: currentColor; opacity: 0.7;">
+                            <path d="M12 2.5 18.2 8l-1.4 10.2a2.2 2.2 0 0 1-2.17 1.8H9.37A2.2 2.2 0 0 1 7.2 18.2L5.8 8 12 2.5Zm0 3.06-4.12 4.1h8.24L12 5.56Zm-4.86 5.77 1.14 7.13h9.44l1.14-7.13H7.14Z"/>
+                        </svg>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="product-content">
+                <!-- Fallback category name if a category context relation exists -->
+                <span class="product-fabric">{% firstof product.category.name "Eau de Parfum · 100ml" %}</span>
+                
+                <a href="{% url 'product_des' product.id %}" class="product-title">
+                    {{ product.name }}
+                </a>
+                
+                <div class="product-footer">
+                    <span class="product-price">₹{{ product.price }}</span>
+                    <!-- Links cleanly to description page where they can select variants/add to bag -->
+                    <a href="{% url 'product_des' product.id %}" class="add-to-cart-btn" style="text-decoration: none;">View Parfum</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <!-- Clean layout protection if your database is empty -->
+        <div style="grid-column: 1 / -1; text-align: center; padding: 60px; background: white; border-radius: 12px; border: 1px solid #E8D5C4;">
+            <p style="color: var(--text-light); margin: 0;">Our new batch is macerating. Check back shortly!</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
